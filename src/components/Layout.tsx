@@ -165,6 +165,7 @@ export const Layout = ({ children }: LayoutProps) => {
     { name: "Meetups", href: "/events" },
     { name: "Plans", href: "/plans" },
     { name: "Founding 100", href: "/founding-100" },
+    { name: "Blog", href: "/blog" },
   ];
 
   return (

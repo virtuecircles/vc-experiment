@@ -176,12 +176,9 @@ Deno.serve(async (req) => {
 
     if (!resendResponse.ok) {
       console.error('Resend error:', JSON.stringify(resendData))
-      // Log the confirmation URL as fallback so admin can manually share it
       console.log(`FALLBACK - Manual confirmation link for ${userEmail}: ${confirmationUrl}`)
-      return new Response(JSON.stringify({ error: resendData?.message || 'Failed to send verification email. Please contact support.' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      // Don't block signup on email failure — auto-confirm so the user can sign in
+      return await autoConfirmAndSucceed(`Resend failed: ${resendData?.message || 'unknown'}`)
     }
 
     console.log('Verification email sent via Resend:', resendData.id)

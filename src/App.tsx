@@ -35,6 +35,8 @@ import NotFound from "./pages/NotFound";
 import ResetPassword from "./pages/ResetPassword";
 import BecomeGuide from "./pages/BecomeGuide";
 import BecomePartner from "./pages/BecomePartner";
+import Blog from "./pages/Blog";
+import BlogDetail from "./pages/BlogDetail";
 
 const queryClient = new QueryClient();
 
@@ -79,6 +81,8 @@ const AppRoutes = () => {
           <Route path="/legal/waiver" element={<Waiver />} />
           <Route path="/become-guide" element={<BecomeGuide />} />
           <Route path="/become-partner" element={<BecomePartner />} />
+          <Route path="/blog" element={<Blog />} />
+          <Route path="/blog/:slug" element={<BlogDetail />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

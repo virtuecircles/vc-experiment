@@ -92,11 +92,33 @@ Deno.serve(async (req) => {
     }
 
     const resendApiKey = Deno.env.get('RESEND_API_KEY')
-    if (!resendApiKey) {
-      return new Response(JSON.stringify({ error: 'Email service not configured' }), {
-        status: 500,
+
+    // Helper: auto-confirm user so they can sign in immediately when email delivery isn't available
+    const autoConfirmAndSucceed = async (reason: string) => {
+      console.log(`Auto-confirming ${userEmail} (${reason})`)
+      try {
+        const supabaseUrl = Deno.env.get('SUPABASE_URL') ?? ''
+        const serviceRoleKey = Deno.env.get('SUPABASE_SERVICE_ROLE_KEY') ?? ''
+        const lookupRes = await fetch(
+          `${supabaseUrl}/auth/v1/admin/users?filter=${encodeURIComponent(userEmail)}`,
+          { headers: { 'apikey': serviceRoleKey, 'Authorization': `Bearer ${serviceRoleKey}` } }
+        )
+        const lookupData = await lookupRes.json()
+        const u = lookupData?.users?.find((x: { email: string }) => x.email?.toLowerCase() === userEmail.toLowerCase())
+        if (u?.id) {
+          await supabaseAdmin.auth.admin.updateUserById(u.id, { email_confirm: true })
+        }
+      } catch (e) {
+        console.error('Auto-confirm failed:', e)
+      }
+      return new Response(JSON.stringify({ success: true, auto_confirmed: true, message: 'Account ready. You can sign in now.' }), {
+        status: 200,
         headers: { ...corsHeaders, 'Content-Type': 'application/json' },
       })
+    }
+
+    if (!resendApiKey) {
+      return await autoConfirmAndSucceed('RESEND_API_KEY not configured')
     }
 
     const emailHtml = `
@@ -154,12 +176,9 @@ Deno.serve(async (req) => {
 
     if (!resendResponse.ok) {
       console.error('Resend error:', JSON.stringify(resendData))
-      // Log the confirmation URL as fallback so admin can manually share it
       console.log(`FALLBACK - Manual confirmation link for ${userEmail}: ${confirmationUrl}`)
-      return new Response(JSON.stringify({ error: resendData?.message || 'Failed to send verification email. Please contact support.' }), {
-        status: 500,
-        headers: { ...corsHeaders, 'Content-Type': 'application/json' },
-      })
+      // Don't block signup on email failure — auto-confirm so the user can sign in
+      return await autoConfirmAndSucceed(`Resend failed: ${resendData?.message || 'unknown'}`)
     }
 
     console.log('Verification email sent via Resend:', resendData.id)

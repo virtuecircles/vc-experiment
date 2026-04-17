@@ -34,6 +34,7 @@ import {
   Flag,
   History,
   Camera,
+  BookOpen,
 } from "lucide-react";
 import { AdminUsers } from "@/components/admin/AdminUsers";
 import { AdminEvents } from "@/components/admin/AdminEvents";
@@ -54,6 +55,7 @@ import { AdminPromoCodes } from "@/components/admin/AdminPromoCodes";
 import { AdminPiiLog } from "@/components/admin/AdminPiiLog";
 import { AdminFlaggedMessages } from "@/components/admin/AdminFlaggedMessages";
 import { AdminGallery } from "@/components/admin/AdminGallery";
+import { AdminBlogs } from "@/components/admin/AdminBlogs";
 
 
 interface UserWithDetails {
@@ -324,6 +326,7 @@ const Admin = () => {
     flaggedMessages: isSuperAdmin || isVCManager || isVCGuide, // All staff can review flags
     meetupHistory: canManageGroups || isVCGuide, // Anyone with group/event access can see history
     gallery: isSuperAdmin || isAdmin, // Super admin + admin can manage gallery
+    blogs: isSuperAdmin || isAdmin || isVCManager, // Admins and managers can manage blog posts
   };
 
   return (
@@ -545,6 +548,12 @@ const Admin = () => {
                     <span className="hidden sm:inline">Gallery</span>
                   </TabsTrigger>
                 )}
+                {visibleTabs.blogs && (
+                  <TabsTrigger value="blogs" className="flex items-center gap-2 py-2">
+                    <BookOpen className="h-4 w-4" />
+                    <span className="hidden sm:inline">Blog</span>
+                  </TabsTrigger>
+                )}
               </TabsList>
 
               <div className="mt-6">
@@ -667,6 +676,12 @@ const Admin = () => {
                 {visibleTabs.gallery && (
                   <TabsContent value="gallery" className="mt-0">
                     <AdminGallery />
+                  </TabsContent>
+                )}
+
+                {visibleTabs.blogs && (
+                  <TabsContent value="blogs" className="mt-0">
+                    <AdminBlogs />
                   </TabsContent>
                 )}
               </div>

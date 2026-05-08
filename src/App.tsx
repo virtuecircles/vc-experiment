@@ -37,6 +37,7 @@ import BecomeGuide from "./pages/BecomeGuide";
 import BecomePartner from "./pages/BecomePartner";
 import Blog from "./pages/Blog";
 import BlogDetail from "./pages/BlogDetail";
+import HowItWorks from "./pages/HowItWorks";
 
 const queryClient = new QueryClient();
 
@@ -83,6 +84,7 @@ const AppRoutes = () => {
           <Route path="/become-partner" element={<BecomePartner />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/blog/:slug" element={<BlogDetail />} />
+          <Route path="/how-it-works" element={<HowItWorks />} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
           <Route path="*" element={<NotFound />} />
         </Routes>

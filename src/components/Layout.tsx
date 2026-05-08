@@ -368,6 +368,7 @@ export const Layout = ({ children }: LayoutProps) => {
               <div>
                 <h3 className="font-display font-bold mb-4">Company</h3>
                 <ul className="space-y-2 text-sm text-muted-foreground">
+                  <li><Link to="/how-it-works" className="hover:text-foreground">How It Works</Link></li>
                   <li><Link to="/aristotle" className="hover:text-foreground">About Virtue</Link></li>
                   <li><Link to="/become-partner" className="hover:text-foreground">Become a Partner</Link></li>
                   <li><Link to="/become-guide" className="hover:text-foreground">Become a Guide</Link></li>

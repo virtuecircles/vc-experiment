@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, User, LogOut, LogIn, ShieldAlert, LayoutDashboard, Sparkles, Users, Calendar, MessageSquare, Bell, CreditCard, Shield, MessageCircle } from "lucide-react";
 import { Button } from "./ui/button";
 import { Chatbot } from "./Chatbot";
+import { Breadcrumbs } from "./Breadcrumbs";
 import { useAuth } from "@/hooks/useAuth";
 import { useAdmin } from "@/hooks/useAdmin";
 import { supabase } from "@/integrations/supabase/client";

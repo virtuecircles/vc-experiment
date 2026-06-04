@@ -349,6 +349,9 @@ export const Layout = ({ children }: LayoutProps) => {
         </div>
       )}
 
+      {/* Breadcrumbs — hidden on home and dashboard app shell */}
+      {!isDashboard && location.pathname !== "/" && <Breadcrumbs />}
+
       {/* Main Content */}
       <main className={isDashboard ? "flex-1 min-h-0 overflow-y-auto" : ""}>{children}</main>
 

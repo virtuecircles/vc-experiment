@@ -100,7 +100,7 @@ export const Breadcrumbs = () => {
               {c.isLast ? (
                 <span
                   aria-current="page"
-                  className="text-foreground text-primary font-medium truncate max-w-[60vw] sm:max-w-none"
+                  className="text-foreground text-violet-500 opasity-50 font-medium truncate max-w-[60vw] sm:max-w-none"
                 >
                   {c.label}
                 </span>

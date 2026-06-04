@@ -98,7 +98,10 @@ export const Breadcrumbs = () => {
             <li key={c.path} className="inline-flex items-center gap-1.5">
               <ChevronRight className="h-3.5 w-3.5 text-primary opacity-60" aria-hidden="true" />
               {c.isLast ? (
-                <span aria-current="page" className="text-foreground font-medium truncate max-w-[60vw] sm:max-w-none">
+                <span
+                  aria-current="page"
+                  className="text-foreground text-primary font-medium truncate max-w-[60vw] sm:max-w-none"
+                >
                   {c.label}
                 </span>
               ) : (

@@ -4,28 +4,28 @@ import { useEffect } from "react";
 
 /** Human-friendly labels for known route segments. */
 const LABELS: Record<string, string> = {
-  "auth": "Sign In",
+  auth: "Sign In",
   "reset-password": "Reset Password",
   "quiz-intro": "Quiz",
-  "quiz": "Quiz",
+  quiz: "Quiz",
   "quiz-results": "Results",
-  "dashboard": "Dashboard",
-  "admin": "Admin",
-  "plans": "Plans",
-  "aristotle": "About Virtue",
-  "events": "Meetups",
+  dashboard: "Dashboard",
+  admin: "Admin",
+  plans: "Plans",
+  aristotle: "About Virtue",
+  events: "Meetups",
   "circle-stories": "Circle Stories",
-  "soulmatch": "SoulMatch",
+  soulmatch: "SoulMatch",
   "founding-100": "Founding 100",
-  "contact": "Contact",
-  "legal": "Legal",
-  "privacy": "Privacy Policy",
-  "terms": "Terms of Use",
+  contact: "Contact",
+  legal: "Legal",
+  privacy: "Privacy Policy",
+  terms: "Terms of Use",
   "code-of-conduct": "Code of Conduct",
-  "waiver": "Waiver",
+  waiver: "Waiver",
   "become-guide": "Become a Guide",
   "become-partner": "Become a Partner",
-  "blog": "Blog",
+  blog: "Blog",
   "how-it-works": "How It Works",
 };
 
@@ -96,7 +96,7 @@ export const Breadcrumbs = () => {
           </li>
           {crumbs.map((c) => (
             <li key={c.path} className="inline-flex items-center gap-1.5">
-              <ChevronRight className="h-3.5 w-3.5 opacity-60" aria-hidden="true" />
+              <ChevronRight className="h-3.5 w-3.5 text-primary opacity-60" aria-hidden="true" />
               {c.isLast ? (
                 <span aria-current="page" className="text-foreground font-medium truncate max-w-[60vw] sm:max-w-none">
                   {c.label}

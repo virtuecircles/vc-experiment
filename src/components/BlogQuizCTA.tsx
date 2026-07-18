@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Sparkles, X } from "lucide-react";
+import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -8,29 +8,17 @@ import { cn } from "@/lib/utils";
  * Floating CTA that invites blog readers to take the Virtue Quiz.
  * - Desktop: pinned to the right side, vertically centered.
  * - Mobile: docked to the bottom-right as a compact card.
- * Fades in after slight scroll; dismissible per session.
+ * Fades in after slight scroll; not dismissible.
  */
 export const BlogQuizCTA = () => {
   const [visible, setVisible] = useState(false);
-  const [dismissed, setDismissed] = useState(false);
 
   useEffect(() => {
-    if (sessionStorage.getItem("blogQuizCtaDismissed") === "1") {
-      setDismissed(true);
-      return;
-    }
     const onScroll = () => setVisible(window.scrollY > 200);
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
     return () => window.removeEventListener("scroll", onScroll);
   }, []);
-
-  const dismiss = () => {
-    setDismissed(true);
-    sessionStorage.setItem("blogQuizCtaDismissed", "1");
-  };
-
-  if (dismissed) return null;
 
   return (
     <div
@@ -42,15 +30,7 @@ export const BlogQuizCTA = () => {
       )}
       aria-hidden={!visible}
     >
-      <div className="pointer-events-auto relative w-[260px] md:w-[240px] rounded-2xl neon-border bg-card/80 backdrop-blur-xl p-5 shadow-[0_0_40px_hsl(var(--glow-primary)/0.35)]">
-        <button
-          onClick={dismiss}
-          aria-label="Dismiss"
-          className="absolute top-2 right-2 text-muted-foreground/70 hover:text-foreground transition-colors"
-        >
-          <X className="h-4 w-4" />
-        </button>
-
+      <div className="pointer-events-auto w-[260px] md:w-[240px] rounded-2xl neon-border bg-card/80 backdrop-blur-xl p-5 shadow-[0_0_40px_hsl(var(--glow-primary)/0.35)]">
         <div className="flex items-center gap-2 mb-2">
           <div className="p-1.5 rounded-lg bg-primary/15 border border-primary/30">
             <Sparkles className="h-4 w-4 text-primary" />

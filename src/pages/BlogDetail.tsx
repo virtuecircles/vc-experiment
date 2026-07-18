@@ -6,6 +6,7 @@ import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
 import { setPageMeta, resetPageMeta } from "@/lib/seo";
 import { ArrowLeft, Calendar } from "lucide-react";
+import { BlogQuizCTA } from "@/components/BlogQuizCTA";
 
 interface BlogPost {
   id: string;
@@ -141,6 +142,7 @@ const BlogDetail = () => {
           {post.content}
         </div>
       </div>
+      <BlogQuizCTA />
     </article>
   );
 };

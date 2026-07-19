@@ -32,7 +32,7 @@ export const BlogQuizCTA = () => {
     >
       <div className="pointer-events-auto w-[260px] md:w-[240px] rounded-2xl neon-border bg-card/80 backdrop-blur-xl p-5 shadow-[0_0_40px_hsl(var(--glow-primary)/0.35)]">
         <div className="flex items-center gap-2 mb-2">
-          <div className="p-1.5 rounded-lg bg-primary/15 border border-primary/30">
+          <div className="p-1.5 rounded-lg bg-gradient-to-br from-primary/20 to-secondary/20 border border-primary/30">
             <Sparkles className="h-4 w-4 text-primary" />
           </div>
           <span className="text-[10px] uppercase tracking-widest text-primary font-semibold">
@@ -40,14 +40,18 @@ export const BlogQuizCTA = () => {
           </span>
         </div>
 
-        <h3 className="font-montserrat text-base font-bold leading-tight mb-1">
+        <h3 className="font-montserrat text-base font-bold leading-tight mb-1 gradient-text">
           Discover Your Virtue
         </h3>
         <p className="text-xs text-muted-foreground mb-4 leading-relaxed">
           Find the friends who actually get you. Take the quiz.
         </p>
 
-        <Button asChild size="sm" className="w-full">
+        <Button
+          asChild
+          size="sm"
+          className="w-full bg-gradient-to-r from-primary via-secondary to-accent hover:opacity-90 transition-opacity duration-300 shadow-[0_0_20px_hsl(var(--glow-primary)/0.4)]"
+        >
           <Link to="/quiz-intro">Take the Quiz</Link>
         </Button>
       </div>

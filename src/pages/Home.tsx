@@ -250,8 +250,7 @@ const Home = () => {
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-4xl font-display font-bold mb-4">
-            What Our <span className="gradient-text">Members Say</span>
-
+              What Our <span className="gradient-text">Members Say</span>
             </h2>
             <p className="text-xl text-muted-foreground">
               Real stories from our Virtue Circles community
@@ -261,8 +260,11 @@ const Home = () => {
           <div className="relative">
             {loadingReviews ? (
               <GlowCard className="p-8 md:p-12">
-                <div className="flex items-center justify-center py-12">
-                  <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-primary"></div>
+                <div className="flex flex-col items-center justify-center py-12 space-y-6">
+                  <div className="w-24 h-24 rounded-full bg-muted animate-pulse" />
+                  <div className="h-4 bg-muted rounded w-32 animate-pulse" />
+                  <div className="h-6 bg-muted rounded w-3/4 animate-pulse" />
+                  <div className="h-6 bg-muted rounded w-2/3 animate-pulse" />
                 </div>
               </GlowCard>
             ) : reviews.length === 0 ? (
@@ -272,44 +274,52 @@ const Home = () => {
               </GlowCard>
             ) : (
               <>
-                <GlowCard className="p-8 md:p-12">
-                  <Quote className="h-12 w-12 text-primary/20 mb-4" />
-                  <div className="min-h-[150px] flex flex-col justify-between">
-                    <p className="text-xl md:text-2xl text-foreground mb-6 italic">
+                <GlowCard className="p-8 md:p-12 text-center">
+                  {/* Large centered profile image */}
+                  <div className="mb-6 flex justify-center">
+                    {reviews[currentReview].image_url ? (
+                      <img
+                        src={reviews[currentReview].image_url}
+                        alt={reviews[currentReview].name}
+                        className="w-24 h-24 md:w-28 md:h-28 rounded-full object-cover border-2 border-primary/30 ring-4 ring-primary/10 shadow-xl"
+                        loading="lazy"
+                      />
+                    ) : (
+                      <div className="w-24 h-24 md:w-28 md:h-28 rounded-full bg-primary/20 border-2 border-primary/30 ring-4 ring-primary/10 flex items-center justify-center shadow-xl">
+                        <span className="text-3xl font-bold text-primary">
+                          {reviews[currentReview].name.charAt(0)}
+                        </span>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Name & location */}
+                  <div className="mb-6">
+                    <p className="font-display font-bold text-xl md:text-2xl">{reviews[currentReview].name}</p>
+                    <p className="text-sm md:text-base text-muted-foreground">
+                      {[reviews[currentReview].virtue, reviews[currentReview].location].filter(Boolean).join(' · ') || 'Virtue Circles Member'}
+                    </p>
+                  </div>
+
+                  {/* Quote */}
+                  <div className="relative mb-6">
+                    <Quote className="h-8 w-8 md:h-10 md:w-10 text-primary/20 absolute -top-2 left-1/2 -translate-x-1/2" />
+                    <p className="text-xl md:text-2xl text-foreground italic leading-relaxed pt-8">
                       "{reviews[currentReview].review}"
                     </p>
-                    <div className="flex items-center justify-between">
-                      <div className="flex items-center gap-4">
-                        {reviews[currentReview].image_url ? (
-                          <img
-                            src={reviews[currentReview].image_url}
-                            alt={reviews[currentReview].name}
-                            className="w-12 h-12 rounded-full object-cover border-2 border-primary/20"
-                          />
-                        ) : (
-                          <div className="w-12 h-12 rounded-full bg-primary/20 flex items-center justify-center">
-                            <span className="text-lg font-bold text-primary">
-                              {reviews[currentReview].name.charAt(0)}
-                            </span>
-                          </div>
-                        )}
-                        <div>
-                          <p className="font-semibold">{reviews[currentReview].name}</p>
-                          <p className="text-sm text-muted-foreground">{reviews[currentReview].location}</p>
-                        </div>
-                      </div>
-                      <div className="flex gap-1">
-                        {[...Array(reviews[currentReview].rating || 5)].map((_, i) => (
-                          <Star key={i} className="h-5 w-5 fill-primary text-primary" />
-                        ))}
-                      </div>
-                    </div>
+                  </div>
+
+                  {/* Star rating */}
+                  <div className="flex justify-center gap-1">
+                    {[...Array(reviews[currentReview].rating || 5)].map((_, i) => (
+                      <Star key={i} className="h-5 w-5 md:h-6 md:w-6 fill-primary text-primary" />
+                    ))}
                   </div>
                 </GlowCard>
 
                 {/* Navigation arrows */}
                 <div className="flex justify-center gap-4 mt-6">
-                  <Button variant="outline" size="icon" onClick={prevReview}>
+                  <Button variant="outline" size="icon" onClick={prevReview} aria-label="Previous testimonial">
                     <ChevronLeft className="h-5 w-5" />
                   </Button>
                   <div className="flex items-center gap-2">
@@ -317,13 +327,14 @@ const Home = () => {
                       <button
                         key={idx}
                         onClick={() => setCurrentReview(idx)}
+                        aria-label={`Go to testimonial ${idx + 1}`}
                         className={`w-2 h-2 rounded-full transition-colors ${
                           idx === currentReview ? "bg-primary" : "bg-muted-foreground/30"
                         }`}
                       />
                     ))}
                   </div>
-                  <Button variant="outline" size="icon" onClick={nextReview}>
+                  <Button variant="outline" size="icon" onClick={nextReview} aria-label="Next testimonial">
                     <ChevronRight className="h-5 w-5" />
                   </Button>
                 </div>

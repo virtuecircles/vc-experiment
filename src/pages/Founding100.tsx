@@ -1,7 +1,7 @@
 import { GlowCard } from "@/components/GlowCard";
 import { Button } from "@/components/ui/button";
 import { Link } from "react-router-dom";
-import { Crown, Sparkles, Zap, Trophy, Heart, Star } from "lucide-react";
+import { Crown, Sparkles, Zap, Trophy, Heart, Star, Quote, User } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/integrations/supabase/client";
 import { useUserRoles } from "@/hooks/useUserRoles";

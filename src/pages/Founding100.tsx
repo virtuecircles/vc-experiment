@@ -194,11 +194,11 @@ const Founding100 = () => {
                         <img
                           src={t.image_url}
                           alt={t.name}
-                          className="w-20 h-20 md:w-22 md:h-22 rounded-full object-cover border-2 border-primary/30 ring-2 ring-primary/10 shadow-lg"
+                          className="w-20 h-20 rounded-full object-cover border-2 border-primary/30 ring-2 ring-primary/10 shadow-lg"
                           loading="lazy"
                         />
                       ) : (
-                        <div className="w-20 h-20 md:w-22 md:h-22 rounded-full bg-muted border-2 border-primary/30 flex items-center justify-center shadow-lg">
+                        <div className="w-20 h-20 rounded-full bg-muted border-2 border-primary/30 flex items-center justify-center shadow-lg">
                           <User className="h-8 w-8 text-muted-foreground" />
                         </div>
                       )}

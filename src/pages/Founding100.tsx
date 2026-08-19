@@ -168,12 +168,18 @@ const Founding100 = () => {
             {loadingTestimonials ? (
               <div className="grid md:grid-cols-3 gap-6">
                 {[1, 2, 3].map((i) => (
-                  <GlowCard key={i} className="p-6">
-                    <div className="animate-pulse space-y-3">
-                      <div className="h-4 bg-muted rounded w-3/4" />
+                  <GlowCard key={i} className="p-6 flex flex-col items-center text-center">
+                    <div className="animate-pulse flex flex-col items-center w-full space-y-4">
+                      <div className="w-20 h-20 rounded-full bg-muted" />
+                      <div className="h-4 bg-muted rounded w-1/2" />
+                      <div className="h-3 bg-muted rounded w-1/3" />
                       <div className="h-4 bg-muted rounded w-full" />
                       <div className="h-4 bg-muted rounded w-5/6" />
-                      <div className="h-4 bg-muted rounded w-1/2 mt-4" />
+                      <div className="flex gap-1">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                          <div key={s} className="w-4 h-4 rounded bg-muted" />
+                        ))}
+                      </div>
                     </div>
                   </GlowCard>
                 ))}
@@ -181,20 +187,44 @@ const Founding100 = () => {
             ) : (
               <div className="grid md:grid-cols-3 gap-6">
                 {testimonials.map((t) => (
-                  <GlowCard key={t.id} className="p-6" hover={false}>
-                    <div className="mb-4">
-                      <div className="flex text-accent mb-2">
-                        {[...Array(t.rating ?? 5)].map((_, i) => (
-                          <Star key={i} className="h-4 w-4 fill-current" />
-                        ))}
-                      </div>
-                      <p className="text-sm text-muted-foreground italic">"{t.review}"</p>
+                  <GlowCard key={t.id} className="p-6 flex flex-col items-center text-center" hover={false}>
+                    {/* Profile Image */}
+                    <div className="relative mb-4">
+                      {t.image_url ? (
+                        <img
+                          src={t.image_url}
+                          alt={t.name}
+                          className="w-20 h-20 md:w-22 md:h-22 rounded-full object-cover border-2 border-primary/30 ring-2 ring-primary/10 shadow-lg"
+                          loading="lazy"
+                        />
+                      ) : (
+                        <div className="w-20 h-20 md:w-22 md:h-22 rounded-full bg-muted border-2 border-primary/30 flex items-center justify-center shadow-lg">
+                          <User className="h-8 w-8 text-muted-foreground" />
+                        </div>
+                      )}
                     </div>
-                    <div>
-                      <div className="font-bold">{t.name}</div>
+
+                    {/* Name & Location */}
+                    <div className="mb-4">
+                      <div className="font-display font-bold text-lg">{t.name}</div>
                       <div className="text-xs text-muted-foreground">
                         {[t.virtue, t.location].filter(Boolean).join(' · ') || 'Virtue Circles Member'}
                       </div>
+                    </div>
+
+                    {/* Quote */}
+                    <div className="relative mb-4">
+                      <Quote className="h-5 w-5 text-primary/20 absolute -top-2 left-1/2 -translate-x-1/2" />
+                      <p className="text-sm text-muted-foreground italic pt-4 leading-relaxed">
+                        "{t.review}"
+                      </p>
+                    </div>
+
+                    {/* Star Rating */}
+                    <div className="flex text-accent mt-auto">
+                      {[...Array(t.rating ?? 5)].map((_, i) => (
+                        <Star key={i} className="h-4 w-4 fill-current" />
+                      ))}
                     </div>
                   </GlowCard>
                 ))}

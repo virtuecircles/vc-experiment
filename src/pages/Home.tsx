@@ -1,7 +1,7 @@
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import { GlowCard } from "@/components/GlowCard";
-import { Sparkles, Users, Brain, Heart, Shield, Zap, Star, Quote, ChevronLeft, ChevronRight } from "lucide-react";
+import { Sparkles, Users, Brain, Heart, Shield, Zap, Star, Quote } from "lucide-react";
 import { useState, useEffect } from "react";
 import { supabase } from "@/integrations/supabase/client";
 
@@ -41,7 +41,6 @@ interface Testimonial {
 }
 
 const Home = () => {
-  const [currentReview, setCurrentReview] = useState(0);
   const [reviews, setReviews] = useState<Testimonial[]>([]);
   const [loadingReviews, setLoadingReviews] = useState(true);
 
@@ -119,17 +118,6 @@ const Home = () => {
     fetchTestimonials();
   }, []);
 
-  // Auto-rotate reviews
-  useEffect(() => {
-    if (reviews.length === 0) return;
-    const interval = setInterval(() => {
-      setCurrentReview((prev) => (prev + 1) % reviews.length);
-    }, 5000);
-    return () => clearInterval(interval);
-  }, [reviews.length]);
-
-  const nextReview = () => setCurrentReview((prev) => (prev + 1) % reviews.length);
-  const prevReview = () => setCurrentReview((prev) => (prev - 1 + reviews.length) % reviews.length);
 
   return (
     <div className="min-h-screen relative">

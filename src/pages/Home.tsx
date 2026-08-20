@@ -272,7 +272,10 @@ const Home = () => {
           {loadingReviews ? (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
               {[0, 1, 2].map((i) => (
-                <GlowCard key={i} className="p-5 h-52 animate-pulse" />
+                <GlowCard key={i} className="p-5 h-52 animate-pulse">
+                  <span className="sr-only">Loading</span>
+                </GlowCard>
+
               ))}
             </div>
           ) : reviews.length === 0 ? (

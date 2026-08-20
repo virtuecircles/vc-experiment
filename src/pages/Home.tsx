@@ -260,125 +260,72 @@ const Home = () => {
       </section>
 
       {/* Review Carousel Section */}
-      <section className="py-20 px-4 bg-muted/30">
-        <div className="max-w-5xl mx-auto">
-          <div className="text-center mb-12">
-            <h2 className="text-4xl font-display font-bold mb-4">
+      <section className="py-12 px-4 bg-muted/30">
+        <div className="max-w-6xl mx-auto">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-display font-bold mb-2">
               What Our <span className="gradient-text">Members Say</span>
             </h2>
-            <p className="text-xl text-muted-foreground">Real stories from our Virtue Circles community</p>
+            <p className="text-muted-foreground">Real stories from our Virtue Circles community</p>
           </div>
 
-          <div className="relative">
-            {loadingReviews ? (
-              <GlowCard className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row items-center gap-8 md:gap-12">
-                  <div className="w-36 h-36 md:w-52 md:h-52 rounded-full bg-muted animate-pulse flex-shrink-0" />
-                  <div className="flex-1 w-full space-y-4">
-                    <div className="h-5 bg-muted rounded w-32 animate-pulse" />
-                    <div className="h-6 bg-muted rounded w-full animate-pulse" />
-                    <div className="h-6 bg-muted rounded w-4/5 animate-pulse" />
-                    <div className="h-4 bg-muted rounded w-40 animate-pulse" />
-                  </div>
-                </div>
-              </GlowCard>
-            ) : reviews.length === 0 ? (
-              <GlowCard className="p-8 md:p-12 text-center">
-                <Quote className="h-12 w-12 text-primary/20 mx-auto mb-4" />
-                <p className="text-muted-foreground">No testimonials yet</p>
-              </GlowCard>
-            ) : (
-              <GlowCard className="p-8 md:p-12">
-                <div className="flex flex-col md:flex-row items-center md:items-center gap-8 md:gap-12">
-                  {/* Left: large circular profile image */}
-                  <div className="flex-shrink-0">
-                    {reviews[currentReview].image_url ? (
+          {loadingReviews ? (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+              {[0, 1, 2].map((i) => (
+                <GlowCard key={i} className="p-5 h-52 animate-pulse" />
+              ))}
+            </div>
+          ) : reviews.length === 0 ? (
+            <GlowCard className="p-8 text-center">
+              <Quote className="h-10 w-10 text-primary/20 mx-auto mb-3" />
+              <p className="text-muted-foreground">No testimonials yet</p>
+            </GlowCard>
+          ) : (
+            <div className="marquee-viewport overflow-hidden relative">
+              <div className="marquee-track gap-4 py-2">
+                {[...reviews, ...reviews].map((review, idx) => (
+                  <GlowCard
+                    key={`${review.id}-${idx}`}
+                    className="p-5 flex flex-col items-center text-center w-[85vw] sm:w-[300px] lg:w-[320px] flex-shrink-0"
+                  >
+                    {review.image_url ? (
                       <img
-                        src={reviews[currentReview].image_url}
-                        alt={reviews[currentReview].name}
-                        className="w-32 h-32 sm:w-36 sm:h-36 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full object-cover border-2 border-primary/30 ring-4 ring-primary/10 shadow-xl"
+                        src={review.image_url}
+                        alt={review.name}
                         loading="lazy"
+                        className="w-[76px] h-[76px] rounded-full object-cover border-2 border-primary/30 ring-2 ring-primary/10 mb-3"
                       />
                     ) : (
-                      <div className="w-32 h-32 sm:w-36 sm:h-36 md:w-52 md:h-52 lg:w-56 lg:h-56 rounded-full bg-primary/20 border-2 border-primary/30 ring-4 ring-primary/10 flex items-center justify-center shadow-xl">
-                        <span className="text-5xl md:text-6xl font-bold text-primary">
-                          {reviews[currentReview].name.charAt(0)}
-                        </span>
+                      <div className="w-[76px] h-[76px] rounded-full bg-primary/20 border-2 border-primary/30 ring-2 ring-primary/10 flex items-center justify-center mb-3">
+                        <span className="text-2xl font-bold text-primary">{review.name.charAt(0)}</span>
                       </div>
                     )}
-                  </div>
-
-                  {/* Right: testimonial content */}
-                  <div className="flex-1 w-full text-center md:text-left">
-                    <div className="flex justify-center md:justify-start gap-1 mb-4">
-                      {[...Array(reviews[currentReview].rating || 5)].map((_, i) => (
-                        <Star key={i} className="h-5 w-5 fill-primary text-primary" />
+                    <p className="font-display font-bold">{review.name}</p>
+                    <p className="text-xs text-muted-foreground mb-2">
+                      {[review.virtue, review.location].filter(Boolean).join(" · ") || "Virtue Circles Member"}
+                    </p>
+                    <div className="flex gap-0.5 mb-2">
+                      {[...Array(review.rating || 5)].map((_, i) => (
+                        <Star key={i} className="h-3.5 w-3.5 fill-primary text-primary" />
                       ))}
                     </div>
-
-                    <p className="text-xl md:text-m lg:text-xl text-foreground leading-relaxed font-display font-medium mb-6">
-                      {reviews[currentReview].review}
-                    </p>
-
-                    <div>
-                      <p className="font-display font-bold text-lg">— {reviews[currentReview].name}</p>
-                      <p className="text-sm text-muted-foreground">
-                        {[reviews[currentReview].virtue, reviews[currentReview].location].filter(Boolean).join(" · ") ||
-                          "Virtue Circles Member"}
-                      </p>
-                    </div>
-
-                    {/* Navigation */}
-                    {reviews.length > 1 && (
-                      <div className="flex items-center justify-center md:justify-end gap-4 mt-8">
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full h-9 w-9"
-                          onClick={prevReview}
-                          aria-label="Previous testimonial"
-                        >
-                          <ChevronLeft className="h-4 w-4" />
-                        </Button>
-                        <div className="flex items-center gap-2">
-                          {reviews.map((_, idx) => (
-                            <button
-                              key={idx}
-                              onClick={() => setCurrentReview(idx)}
-                              aria-label={`Go to testimonial ${idx + 1}`}
-                              className={`w-2 h-2 rounded-full transition-colors ${
-                                idx === currentReview ? "bg-primary" : "bg-muted-foreground/30"
-                              }`}
-                            />
-                          ))}
-                        </div>
-                        <Button
-                          variant="outline"
-                          size="icon"
-                          className="rounded-full h-9 w-9"
-                          onClick={nextReview}
-                          aria-label="Next testimonial"
-                        >
-                          <ChevronRight className="h-4 w-4" />
-                        </Button>
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </GlowCard>
-            )}
-
-            {/* Link to Circle Stories */}
-            <div className="text-center mt-8">
-              <Link to="/circle-stories">
-                <Button variant="ghost" className="text-primary hover:text-primary/80">
-                  See more stories and photos →
-                </Button>
-              </Link>
+                    <p className="text-sm text-muted-foreground leading-relaxed line-clamp-4">{review.review}</p>
+                  </GlowCard>
+                ))}
+              </div>
             </div>
+          )}
+
+          <div className="text-center mt-6">
+            <Link to="/circle-stories">
+              <Button variant="ghost" className="text-primary hover:text-primary/80">
+                See more stories and photos →
+              </Button>
+            </Link>
           </div>
         </div>
       </section>
+
 
       {/* Membership Plans */}
       <section className="py-20 px-4 bg-muted/30">

@@ -273,7 +273,7 @@ const Home = () => {
               <p className="text-muted-foreground">No testimonials yet</p>
             </GlowCard>
           ) : (
-            <div className="marquee-viewport overflow-hidden relative">
+            <div className="marquee-viewport overflow-hidden relative w-full">
               <div className="marquee-track gap-4 py-2">
                 {[...reviews, ...reviews].map((review, idx) => (
                   <GlowCard

@@ -300,3 +300,24 @@ body::-webkit-scrollbar {
     display: none;
   }
 }
+
+/* ── Testimonial marquee ── */
+@keyframes testimonial-marquee {
+  from { transform: translateX(0); }
+  to { transform: translateX(-50%); }
+}
+
+.marquee-track {
+  display: flex;
+  width: max-content;
+  animation: testimonial-marquee 40s linear infinite;
+}
+
+.marquee-viewport:hover .marquee-track,
+.marquee-track:focus-within {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .marquee-track { animation: none; }
+}

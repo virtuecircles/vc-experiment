@@ -248,8 +248,9 @@ const Home = () => {
       </section>
 
       {/* Review Carousel Section */}
-      <section className="py-12 px-4 bg-muted/30">
-        <div className="max-w-6xl mx-auto">
+      <section className="py-12 bg-muted/30">
+        <div className="w-full px-0 [&>div:first-child]:px-4 [&>div:last-child]:px-4">
+
           <div className="text-center mb-8">
             <h2 className="text-3xl font-display font-bold mb-2">
               What Our <span className="gradient-text">Members Say</span>
